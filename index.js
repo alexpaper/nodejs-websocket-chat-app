@@ -12,7 +12,7 @@ const wss = new WebSocketServer({port:8080});
 wss.on('connection', (ws, req)=>{
     let ip = req.socket.remoteAddress;
     log(`Ip ${ip}`);
-  
+    // ON CLIENT MESSAGE EVENT
     ws.on('message', data =>{
         log('received: %s', data.toString());
         console.log(data.toString());

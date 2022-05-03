@@ -5,8 +5,6 @@
 ![License](https://img.shields.io/github/license/yilber/readme-boilerplate.svg)
 
 
-<!-- ## Background -->
-
 ![image](./public/front.png)
 
 > Super Simple Nodejs WebSocket Chat App!
