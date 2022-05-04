@@ -1,11 +1,11 @@
-// Select elements
+// 1 Select elements
 const input = document.querySelector('input');
 const textArea = document.querySelector('textarea');
 const connected = document.querySelector('.connected');
 
-// WEBSOCKET CLIENT
+// 2 WEBSOCKET CLIENT
 const ws = new WebSocket('ws://localhost:8080');
-// OPEN EVENT LISTENER
+// 3 OPEN EVENT LISTENER
 ws.addEventListener('open', ()=>{
     console.log('Connection established!');
     connected.textContent = 'Connected 🛰️.';
@@ -13,7 +13,13 @@ ws.addEventListener('open', ()=>{
 
     // ws.send(JSON.stringify({client: clientName, message: 'Hello from client!'}));
 });
-// MESSAGE EVENT LISTENER
+// 4 ON CLOSE EVENT LISTENER
+ws.addEventListener('close', ()=>{
+    connected.textContent = 'Disconnected 📡.'
+    connected.classList.remove('active');
+    console.log('Disconnected 📡');
+});
+// 5 MESSAGE EVENT LISTENER
 ws.addEventListener('message', e =>{
     // console.log(e)
     let {data} = e;
@@ -24,7 +30,7 @@ ws.addEventListener('message', e =>{
     textArea.value = newData.time + ' ' + newData.message;
 });
 
-// INPUT KEYPRESS EVENT LISTENER
+// 6 INPUT KEYPRESS EVENT LISTENER
 input.addEventListener('keypress', e =>{
     if(e.code === 'Enter' && input.value !== ''){ 
         let date = new Date().toLocaleDateString();
@@ -33,11 +39,4 @@ input.addEventListener('keypress', e =>{
         ws.send(JSON.stringify({time: datetime, message: `💬 ${input.value}`}));
         input.value = '';
     };
-});
-
-// ON CLOSE EVENT LISTENER
-ws.addEventListener('close', ()=>{
-    connected.textContent = 'Disconnected 📡.'
-    connected.classList.remove('active');
-    console.log('Disconnected 📡');
 });
